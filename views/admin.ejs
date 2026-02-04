@@ -1,0 +1,55 @@
+<h1>Gestión de Videojuegos</h1>
+<p>Usuario: <%= user.email %></p>
+
+<form action="/admin" method="GET" class="row g-3 mb-4 p-3 border rounded">
+    <div class="col-md-3">
+        <select name="plataforma" class="form-select">
+            <option value="">Todas las plataformas</option>
+            <option value="PC" <%= filters.plataforma === 'PC' ? 'selected' : '' %>>PC</option>
+            <option value="PlayStation" <%= filters.plataforma === 'PlayStation' ? 'selected' : '' %>>PlayStation</option>
+            <option value="Xbox" <%= filters.plataforma === 'Xbox' ? 'selected' : '' %>>Xbox</option>
+            <option value="Switch" <%= filters.plataforma === 'Switch' ? 'selected' : '' %>>Switch</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select name="estado" class="form-select">
+            <option value="">Todos los estados</option>
+            <option value="Pendiente" <%= filters.estado === 'Pendiente' ? 'selected' : '' %>>Pendiente</option>
+            <option value="En Progreso" <%= filters.estado === 'En Progreso' ? 'selected' : '' %>>En Progreso</option>
+            <option value="Completado" <%= filters.estado === 'Completado' ? 'selected' : '' %>>Completado</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <input type="text" name="genero" class="form-control" placeholder="Género (ej. RPG)" value="<%= filters.genero || '' %>">
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-secondary w-100">Filtrar</button>
+    </div>
+</form>
+
+<hr>
+
+<%- include('partials/listado-videojuegos.ejs') %>
+
+<button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalFormulario">
+    Añadir Videojuego
+</button>
+
+<div class="modal fade" id="modalFormulario" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo Videojuego</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/games/insertar" method="POST" id="formNuevo">
+                     <%- include('partials/formulario-campos.ejs', {juego: {}}) %>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" form="formNuevo">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

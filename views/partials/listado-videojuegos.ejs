@@ -1,0 +1,42 @@
+<div class="d-flex flex-row flex-wrap gap-3 justify-content-center">
+    <% if (juegos.length === 0) { %>
+        <p class="text-muted">No hay videojuegos en la colección.</p>
+    <% } %>
+
+    <% juegos.forEach((juego) => { %>
+        <div class="card shadow-sm" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title"><%= juego.titulo %></h5>
+                <h6 class="card-subtitle mb-2 text-muted"><%= juego.plataforma %></h6>
+                <p class="card-text">
+                    <span class="badge bg-secondary"><%= juego.genero %></span>
+                    <span class="badge <%= juego.estado === 'Completado' ? 'bg-success' : (juego.estado === 'En Progreso' ? 'bg-warning' : 'bg-info') %>">
+                        <%= juego.estado %>
+                    </span>
+                </p>
+                
+                <div class="d-flex justify-content-between mt-3">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal<%= juego.id %>">Editar</button>
+                    <a href="/games/delete/<%= juego.id %>" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar?')">Eliminar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editModal<%= juego.id %>" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar <%= juego.titulo %></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/games/editar" method="POST">
+                            <%- include('formulario-campos.ejs', {juego: juego}) %>
+                            <button type="submit" class="btn btn-primary w-100 mt-3">Actualizar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% }); %>
+</div>
