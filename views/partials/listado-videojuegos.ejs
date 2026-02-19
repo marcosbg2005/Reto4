@@ -4,9 +4,12 @@
     <% } %>
 
     <% juegos.forEach((juego) => { %>
-        <div class="card shadow-sm" style="width: 18rem;">
+        <div class="card shadow-sm game-card" data-id="<%= juego.id %>" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title"><%= juego.titulo %></h5>
+                <div class="d-flex justify-content-between align-items-start">
+                    <h5 class="card-title"><%= juego.titulo %></h5>
+                    <button class="btn btn-sm btn-light btn-favorite border-0 fs-5" data-id="<%= juego.id %>">☆</button>
+                </div>
                 <h6 class="card-subtitle mb-2 text-muted"><%= juego.plataforma %></h6>
                 <p class="card-text">
                     <span class="badge bg-secondary"><%= juego.genero %></span>
@@ -30,7 +33,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/games/editar" method="POST">
+                        <form action="/games/editar" method="POST" class="ajax-form">
                             <%- include('formulario-campos.ejs', {juego: juego}) %>
                             <button type="submit" class="btn btn-primary w-100 mt-3">Actualizar</button>
                         </form>

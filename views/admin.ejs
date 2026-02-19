@@ -29,11 +29,16 @@
 
 <hr>
 
-<%- include('partials/listado-videojuegos.ejs') %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormulario">
+        Añadir Videojuego
+    </button>
+    <button type="button" id="btnToggleFavs" class="btn btn-outline-warning text-dark fw-bold">
+        Cargando vista...
+    </button>
+</div>
 
-<button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalFormulario">
-    Añadir Videojuego
-</button>
+<%- include('partials/listado-videojuegos.ejs') %>
 
 <div class="modal fade" id="modalFormulario" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -43,7 +48,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form action="/games/insertar" method="POST" id="formNuevo">
+                <form action="/games/insertar" method="POST" id="formNuevo" class="ajax-form">
                      <%- include('partials/formulario-campos.ejs', {juego: {}}) %>
                 </form>
             </div>
@@ -53,3 +58,5 @@
         </div>
     </div>
 </div>
+
+<script src="/javascripts/admin.js"></script>

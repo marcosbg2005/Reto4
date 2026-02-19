@@ -76,7 +76,7 @@ router.get('/admin', authMiddleware, function(req, res, next) {
     });
 });
 
-// Insertar juego (HU2)
+// Insertar juego (HU2) - ADAPTADO PARA AJAX
 router.post("/games/insertar", authMiddleware, function(req, res, next) {
     daoGames.save(
         req.session.user.id,
@@ -85,10 +85,15 @@ router.post("/games/insertar", authMiddleware, function(req, res, next) {
         req.body.genero,
         req.body.estado
     );
+    
+    // Comprobamos si la petición viene por AJAX (Fetch)
+    if (req.headers.accept && req.headers.accept.includes('application/json')) {
+        return res.json({ success: true });
+    }
     res.redirect("/admin");
 });
 
-// Editar juego (HU3, HU5)
+// Editar juego (HU3, HU5) - ADAPTADO PARA AJAX
 router.post("/games/editar", authMiddleware, function(req, res, next) {
     daoGames.update(
         req.body.id,
@@ -97,6 +102,11 @@ router.post("/games/editar", authMiddleware, function(req, res, next) {
         req.body.genero,
         req.body.estado
     );
+
+    // Comprobamos si la petición viene por AJAX (Fetch)
+    if (req.headers.accept && req.headers.accept.includes('application/json')) {
+        return res.json({ success: true });
+    }
     res.redirect("/admin");
 });
 
